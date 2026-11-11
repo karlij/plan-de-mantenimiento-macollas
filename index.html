@@ -38,11 +38,11 @@
     </script>
 
     <style>
-        /* CSS optimizado para impresión sin cortes (Carta / Oficio Horizontal) */
+        /* CSS optimizado para impresión repetitiva y centrado en Carta / Oficio */
         @media print {
             @page {
                 size: var(--print-size, letter) landscape;
-                margin: 0.6cm;
+                margin: 2.2cm 0.6cm 1.8cm 0.6cm;
             }
             body {
                 background: white !important;
@@ -55,22 +55,57 @@
             .print-only {
                 display: block !important;
             }
+            .print-header-fixed {
+                position: fixed;
+                top: -1.8cm;
+                left: 0;
+                right: 0;
+                height: 1.5cm;
+                border-bottom: 2px solid #0369a1 !important;
+                background: white !important;
+                z-index: 1000;
+                display: flex !important;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 4px;
+            }
+            .print-footer-fixed {
+                position: fixed;
+                bottom: -1.4cm;
+                left: 0;
+                right: 0;
+                height: 1cm;
+                border-top: 1px solid #cbd5e1 !important;
+                background: white !important;
+                z-index: 1000;
+                display: flex !important;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 7pt !important;
+                color: #64748b !important;
+                padding: 0 4px;
+            }
+            .print-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                float: none !important;
+            }
             .card-box {
                 border: 1px solid #cbd5e1 !important;
                 box-shadow: none !important;
                 background: #ffffff !important;
                 color: #0f172a !important;
             }
-            /* Evitar cortes en contenedores y tablas */
             div, .overflow-x-auto, .max-h-\[600px\] {
                 overflow: visible !important;
                 max-height: none !important;
-                width: 100% !important;
             }
             table {
                 width: 100% !important;
                 border-collapse: collapse !important;
                 page-break-inside: auto !important;
+                margin: 0 auto !important;
             }
             tr {
                 page-break-inside: avoid !important;
@@ -109,12 +144,11 @@
 </head>
 <body class="h-full flex flex-col font-sans bg-slate-100 text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- Header Navigation -->
+    <!-- Header Navigation (Pantalla) -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center space-x-3">
-                    <!-- Logo desde el repositorio GitHub (karlij/plan-de-mantenimiento-macollas) -->
                     <div class="bg-slate-50 p-1.5 rounded-xl border border-slate-200 flex items-center justify-center shadow-sm">
                         <img src="https://raw.githubusercontent.com/karlij/plan-de-mantenimiento-macollas/main/logo.png" alt="Vulcan Logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex';">
                         <div id="fallback-logo" class="hidden h-9 px-2 items-center justify-center bg-brand-600 text-white font-bold rounded text-xs">VULCAN</div>
@@ -129,7 +163,6 @@
                 </div>
 
                 <div class="flex items-center space-x-2">
-                    <!-- Selector de Formato de Impresión (Carta / Oficio) -->
                     <div class="hidden sm:flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs">
                         <label class="text-slate-600 mr-2"><i class="fa-solid fa-file-lines text-brand-600"></i> Formato:</label>
                         <select id="print-size-selector" onchange="changePrintSize(this.value)" class="bg-white text-slate-700 border border-slate-300 rounded p-1 focus:outline-none">
@@ -138,17 +171,14 @@
                         </select>
                     </div>
 
-                    <!-- Botón Carga Manual -->
                     <button onclick="toggleUploadModal()" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-medium text-xs px-3 py-2 rounded-lg transition-colors">
                         <i class="fa-solid fa-cloud-arrow-up text-brand-600"></i>
                         <span class="hidden md:inline">Cargar Datos</span>
                     </button>
-                    <!-- Exportar CSV -->
                     <button onclick="exportToCSV()" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-medium text-xs px-3 py-2 rounded-lg transition-colors">
                         <i class="fa-solid fa-file-csv text-emerald-600"></i>
                         <span class="hidden md:inline">Exportar CSV</span>
                     </button>
-                    <!-- Botón Impresión -->
                     <button onclick="window.print()" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-medium text-xs px-3.5 py-2 rounded-lg transition-all shadow-md shadow-brand-600/20">
                         <i class="fa-solid fa-print"></i>
                         <span>Imprimir Tablero</span>
@@ -158,23 +188,23 @@
         </div>
     </header>
 
-    <!-- Header Impresión -->
-    <div class="hidden print-only p-2 border-b border-slate-300 mb-2">
-        <div class="flex justify-between items-center">
+    <!-- Cintillo Superior Fijo para Impresión -->
+    <div class="hidden print-only print-header-fixed">
+        <div class="flex items-center space-x-2">
+            <img src="https://raw.githubusercontent.com/karlij/plan-de-mantenimiento-macollas/main/logo.png" alt="Vulcan Logo" class="h-7 w-auto object-contain">
             <div>
-                <h1 class="text-lg font-bold uppercase text-slate-900">Reporte Operativo y Tablero de Indicadores - Campo Cariña</h1>
-                <p class="text-[10px] text-slate-600">Control Quincenal de Mantenimiento Preventivo (Cabezales, Motores y VFD) - Vulcan Energy</p>
-                <p class="text-[10px] text-slate-500">Período analizado: <span id="print-date-range">01/04/2026 - 31/12/2026</span></p>
+                <h1 class="text-xs font-bold uppercase text-slate-900">Reporte Operativo y Cronograma de Mantenimiento - Campo Cariña</h1>
+                <p class="text-[9px] text-slate-600">Período: <span id="print-date-range">01/04/2026 - 31/12/2026</span> | Vulcan Energy</p>
             </div>
-            <div class="text-right text-[10px] text-slate-600">
-                <p>Emisión: <span id="print-date"></span></p>
-                <p>Pozos Totales: <span id="print-total-pozos">191</span></p>
-            </div>
+        </div>
+        <div class="text-right text-[9px] text-slate-600">
+            <p>Emisión: <span id="print-date"></span></p>
+            <p>Total Pozos: <span id="print-total-pozos">191</span></p>
         </div>
     </div>
 
     <!-- Container Principal -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 print-container">
 
         <!-- Banner Protocolo Actividades -->
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm relative overflow-hidden no-print">
@@ -203,7 +233,7 @@
             </div>
         </div>
 
-        <!-- Cards KPIs / Tablero de Indicadores Actualizado -->
+        <!-- Cards KPIs / Tablero de Indicadores -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm card-box">
                 <div class="flex items-center justify-between text-slate-500 text-xs font-semibold">
@@ -292,43 +322,53 @@
             </div>
         </div>
 
-        <!-- Barra de Filtros Multicolumna + Rango de Fechas -->
+        <!-- Barra de Filtros Multicolumna (Incluye Status Ejecutado / Pendiente) -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3 no-print">
             <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
                 <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-filter text-brand-600"></i> Filtros Multicolumna y Rango de Período
+                    <i class="fa-solid fa-filter text-brand-600"></i> Filtros Multicolumna y Estado de Ejecución
                 </h3>
                 <button onclick="resetFilters()" class="text-xs text-slate-500 hover:text-brand-600 flex items-center gap-1 transition-colors">
                     <i class="fa-solid fa-rotate-left"></i> Restablecer Filtros
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3">
-                <!-- Fecha Inicio Rango -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-8 gap-3">
+                <!-- Fecha Inicio -->
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-600 mb-1">Fecha Desde</label>
                     <input type="date" id="filter-date-start" value="2026-04-01" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                 </div>
 
-                <!-- Fecha Fin Rango -->
+                <!-- Fecha Fin -->
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-600 mb-1">Fecha Hasta</label>
                     <input type="date" id="filter-date-end" value="2026-12-31" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                 </div>
 
+                <!-- Filtro Status Ejecución / Pendiente -->
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Status Ejecución</label>
+                    <select id="filter-status" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none font-semibold text-indigo-700">
+                        <option value="">Todos los Status</option>
+                        <option value="ejecutado">Ejecutadas</option>
+                        <option value="pendiente">Pendientes</option>
+                    </select>
+                </div>
+
                 <!-- Filtro Grupo -->
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Grupo de Ejecución</label>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Grupo</label>
                     <select id="filter-grupo" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                        <option value="">Todos los Grupos (1-9)</option>
+                        <option value="">Todos (1-9)</option>
                     </select>
                 </div>
 
                 <!-- Filtro Área -->
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Área Operativa</label>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Área</label>
                     <select id="filter-area" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                        <option value="">Todas las Áreas</option>
+                        <option value="">Todas</option>
                     </select>
                 </div>
 
@@ -336,23 +376,23 @@
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-600 mb-1">Macolla</label>
                     <select id="filter-macolla" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                        <option value="">Todas las Macollas</option>
+                        <option value="">Todas</option>
                     </select>
                 </div>
 
                 <!-- Filtro Categoría -->
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Categoría Pozo</label>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Categoría</label>
                     <select id="filter-categoria" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                        <option value="">Todas las Categorías</option>
-                        <option value="1">Cat 1 (Productores)</option>
-                        <option value="3">Cat 3 (Inactivos/Obs)</option>
+                        <option value="">Todas</option>
+                        <option value="1">Cat 1 (Prod)</option>
+                        <option value="3">Cat 3 (Inact)</option>
                     </select>
                 </div>
 
                 <!-- Buscador por Texto -->
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Buscar Pozo / Macolla</label>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Buscar Pozo</label>
                     <div class="relative">
                         <input type="text" id="search-input" onkeyup="applyFilters()" placeholder="Ej: MFC0167..." class="w-full text-xs bg-slate-50 border border-slate-300 text-slate-800 rounded-lg p-2 pl-8 focus:ring-2 focus:ring-brand-500 focus:outline-none">
                         <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
@@ -375,7 +415,7 @@
             </nav>
         </div>
 
-        <!-- Tab 1: Matriz Cronograma con Casillas de Verificación de Ejecución -->
+        <!-- Tab 1: Matriz Cronograma -->
         <div id="tab-matrix" class="tab-content space-y-4">
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="p-4 bg-white border-b border-slate-200 flex flex-wrap justify-between items-center gap-2 no-print">
@@ -447,6 +487,12 @@
 
     </main>
 
+    <!-- Cintillo Inferior Fijo para Impresión -->
+    <div class="hidden print-only print-footer-fixed">
+        <p><strong>© 2026 — Ing. Karli Jiménez</strong> - Sistema Integrado de Gestión de Macollas</p>
+        <p>Planificación y Control de Mantenimiento - Vulcan Energy</p>
+    </div>
+
     <!-- Modal Carga Repositorio CSV/JSON -->
     <div id="modal-upload" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden no-print">
         <div class="bg-white border border-slate-200 rounded-2xl w-full max-w-xl p-6 shadow-2xl relative space-y-4">
@@ -459,7 +505,6 @@
                 </button>
             </div>
 
-            <!-- Drag & Drop Zone -->
             <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-xl p-8 text-center cursor-pointer bg-slate-50 hover:bg-slate-100 transition-all space-y-3">
                 <input type="file" id="file-input" accept=".csv,.json" onchange="handleFileSelect(event)" class="hidden">
                 <div class="w-12 h-12 bg-brand-50 text-brand-600 border border-brand-200 rounded-full flex items-center justify-center mx-auto text-xl">
@@ -482,7 +527,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer (Pantalla) -->
     <footer class="bg-white border-t border-slate-200 py-4 mt-auto no-print">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
             <p><strong>© 2026 — Desarrollado por Ing. Karli Jiménez</strong> - Sistema Integrado de Gestión de Macollas</p>
@@ -763,9 +808,9 @@
             const areaSelect = document.getElementById('filter-area');
             const macollaSelect = document.getElementById('filter-macolla');
 
-            grupoSelect.innerHTML = '<option value="">Todos los Grupos (1-9)</option>';
-            areaSelect.innerHTML = '<option value="">Todas las Áreas</option>';
-            macollaSelect.innerHTML = '<option value="">Todas las Macollas</option>';
+            grupoSelect.innerHTML = '<option value="">Todos (1-9)</option>';
+            areaSelect.innerHTML = '<option value="">Todas</option>';
+            macollaSelect.innerHTML = '<option value="">Todas</option>';
 
             const grupos = [...new Set(activePozosData.map(p => p.GRUPO))].sort((a,b) => a - b);
             grupos.forEach(g => grupoSelect.innerHTML += `<option value="${g}">Grupo ${g}</option>`);
@@ -780,6 +825,7 @@
         function applyFilters() {
             const startDateVal = document.getElementById('filter-date-start').value;
             const endDateVal = document.getElementById('filter-date-end').value;
+            const statusVal = document.getElementById('filter-status').value;
             const grupoVal = document.getElementById('filter-grupo').value;
             const areaVal = document.getElementById('filter-area').value;
             const macollaVal = document.getElementById('filter-macolla').value;
@@ -787,6 +833,9 @@
             const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
 
             document.getElementById('print-date-range').innerText = `${startDateVal} al ${endDateVal}`;
+
+            const startRange = new Date(startDateVal);
+            const endRange = new Date(endDateVal);
 
             filteredPozos = activePozosData.filter(p => {
                 const matchGrupo = !grupoVal || p.GRUPO == grupoVal;
@@ -798,7 +847,31 @@
                     p.Macolla.toLowerCase().includes(searchVal) ||
                     p.AREA.toLowerCase().includes(searchVal);
 
-                return matchGrupo && matchArea && matchMacolla && matchCat && matchSearch;
+                // Filtro por Status (Ejecutado o Pendiente en el rango)
+                let matchStatus = true;
+                if (statusVal) {
+                    const macKey = `G${p.GRUPO}-${p.Macolla}`;
+                    let hasExecutionInRange = false;
+                    let hasProgrammedInRange = false;
+
+                    cycles.forEach(c => {
+                        const groupDate = c.groupDates[p.GRUPO];
+                        if (groupDate && groupDate >= startRange && groupDate <= endRange) {
+                            hasProgrammedInRange = true;
+                            if (executedInterventions[macKey] && executedInterventions[macKey].includes(c.cycleNumber)) {
+                                hasExecutionInRange = true;
+                            }
+                        }
+                    });
+
+                    if (statusVal === 'ejecutado') {
+                        matchStatus = hasExecutionInRange;
+                    } else if (statusVal === 'pendiente') {
+                        matchStatus = hasProgrammedInRange && !hasExecutionInRange;
+                    }
+                }
+
+                return matchGrupo && matchArea && matchMacolla && matchCat && matchSearch && matchStatus;
             });
 
             updateKPIs();
@@ -810,6 +883,7 @@
         function resetFilters() {
             document.getElementById('filter-date-start').value = "2026-04-01";
             document.getElementById('filter-date-end').value = "2026-12-31";
+            document.getElementById('filter-status').value = "";
             document.getElementById('filter-grupo').value = "";
             document.getElementById('filter-area').value = "";
             document.getElementById('filter-macolla').value = "";
@@ -827,6 +901,7 @@
             }
             localStorage.setItem('vulcan_executed', JSON.stringify(executedInterventions));
             updateKPIs();
+            applyFilters(); // Re-aplica para actualizar si hay filtro de status activo
         }
 
         function updateKPIs() {
@@ -912,7 +987,7 @@
             });
 
             if (Object.keys(grouped).length === 0) {
-                tbody.innerHTML = `<tr><td colspan="25" class="p-8 text-center text-slate-500">No se encontraron macollas o pozos en el rango de fechas seleccionado.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="25" class="p-8 text-center text-slate-500">No se encontraron macollas o pozos con los filtros seleccionados.</td></tr>`;
                 return;
             }
 
