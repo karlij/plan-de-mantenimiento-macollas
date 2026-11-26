@@ -609,7 +609,7 @@
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-4 mt-auto no-print">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <p><strong>© 2026 — Desarrollado por Ing. Karli Jiménez</strong> - Sistema Integrado de Gestión de Macollas</p>
+            <p><strong>© 2026 — Desarrollado por Ing. Karli Jiménez</strong> - Gestión de Macollas</p>
             <p>Planificación y Control de Mantenimiento - Vulcan Energy</p>
         </div>
     </footer>
@@ -633,6 +633,18 @@
             9: 'Octubre 2026',
             10: 'Noviembre 2026',
             11: 'Diciembre 2026'
+            12: 'Enero 2027',
+            13: 'Febrero 2027',
+            14: 'Marzo 2027',
+            15: 'Abril 2027',
+            16: 'Mayo 2027',
+            17: 'Junio 2027',
+            18: 'Julio 2027',
+            19: 'Agosto 2027',
+            20: 'Septiembre 2027',
+            21: 'Octubre 2027',
+            22: 'Noviembre 2027',
+            23: 'Diciembre 2027'
         };
 
         const selectedFilters = {
@@ -838,8 +850,8 @@
             {"AREA":"CN","GRUPO":5,"Macolla":"Teresa Heredia","pozo":"MFC0227","categoria":1,"potencial":90,"frecuencia":"QUINCENAL","INICIO":"1/10/2026"}
         ];
 
-        const BASE_START_DATE = new Date(2026, 10, 1);
-        const BASE_END_DATE = new Date(2027, 12, 31);
+        const BASE_START_DATE = new Date(2026, 09, 1);
+        const BASE_END_DATE = new Date(2027, 11, 31);
 
         let activePozosData = [...defaultPozosData];
         let filteredPozos = [...activePozosData];
