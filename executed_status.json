@@ -1,52 +1,41 @@
 {
   "G1-Guatamare": {
-    "cycles": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8
-    ],
-    "actualDates": {
-      "1": "2026-04-01"
-    },
-    "shiftOffsetDays": 0,
-    "shiftFromCycle": 2
+    "1": "2026-04-01",
+    "cycles": true,
+    "actualDates": true,
+    "shiftFromCycle": true
   },
-  "G1-Guayacan": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ],
-  "G1-Juana Ramirez": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ],
-  "G1-María Palacios": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7
-  ],
-  "G2-Concepción Mariño": [
-    1,
-    2,
-    3,
-    4
-  ]
+  "G1-Guayacan": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true
+  },
+  "G1-Juana Ramirez": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true
+  },
+  "G1-María Palacios": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true
+  },
+  "G2-Concepción Mariño": {
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true
+  }
 }
