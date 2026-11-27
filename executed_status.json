@@ -11,9 +11,9 @@
       8
     ],
     "actualDates": {
-      "1": "2026-10-01"
+      "1": "2026-04-01"
     },
-    "shiftOffsetDays": 183,
+    "shiftOffsetDays": 0,
     "shiftFromCycle": 2
   },
   "G1-Guayacan": [
