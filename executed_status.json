@@ -1,14 +1,21 @@
 {
-  "G1-Guatamare": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8
-  ],
+  "G1-Guatamare": {
+    "cycles": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "actualDates": {
+      "1": "2026-10-01"
+    },
+    "shiftOffsetDays": 183,
+    "shiftFromCycle": 2
+  },
   "G1-Guayacan": [
     1,
     2,
